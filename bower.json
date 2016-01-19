@@ -1,0 +1,27 @@
+{
+  "name": "i18n.js",
+  "homepage": "https://github.com/oscarfonts/i18n.js",
+  "authors": [
+    "Oscar Fonts <oscar.fonts@geomati.co>"
+  ],
+  "description": "AMD module for multilanguage applications",
+  "main": "src/i18n.js",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "i18n"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.22",
+    "text": "requirejs-text#~2.0.14"
+  }
+}
