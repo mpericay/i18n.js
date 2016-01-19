@@ -1,0 +1,19 @@
+{
+  "langs": {
+    "en": "English",
+    "es": "Español",
+    "ca": "Català"
+  },
+  "Select a language:": {
+    "es": "Selecciona un idioma:",
+    "ca": "Sel·leccioneu un idioma:"
+  },
+  "Translation example": {
+    "es": "Ejemplo de traducción",
+    "ca": "Exemple de traducció"
+  },
+  "My tailor is rich": {
+    "es": "Mi sastre es rico",
+    "ca": "El meu sastre és ric"
+  }
+}
