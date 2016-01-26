@@ -4,6 +4,8 @@
 define(['text!translations.json'], function(bundle) {
     "use strict";
 
+    var defaultLang = "en";
+
     var translations = JSON.parse(bundle);
 
     var params = {};
@@ -13,7 +15,7 @@ define(['text!translations.json'], function(bundle) {
     });
 
     var activeLang;
-    setLang(params.hasOwnProperty('lang') ? params.lang : 'en');
+    setLang(params.hasOwnProperty('lang') ? params.lang : defaultLang);
 
     function setLang(lang) {
         activeLang = lang;
@@ -29,6 +31,20 @@ define(['text!translations.json'], function(bundle) {
     function t(string, values) {
         if (translations.hasOwnProperty(string) && translations[string].hasOwnProperty(activeLang)) {
             string = translations[string][activeLang];
+        }
+        return template(string, values);
+    }
+
+    function translateFrom(lang, string, values) {
+        if (!lang || lang == defaultLang) {
+            return t(string, values);
+        }
+        for(var i in translations) {
+            var token = translations[i];
+            if(token[lang] && token[lang] == string) {
+                var string = activeLang == defaultLang ? i : token[activeLang]
+                return template(string, values);
+            }
         }
         return template(string, values);
     }
@@ -53,13 +69,15 @@ define(['text!translations.json'], function(bundle) {
         },
         translateDocTree: function(el) {
             if (!el) el = document;
+            var srcLang = el.lang;
             var treeWalker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
             while (treeWalker.nextNode()) {
                 var node = treeWalker.currentNode;
                 if(/\S/.test(node.nodeValue)) { // Not a whitespace-only text node
-                    node.nodeValue = t(node.nodeValue);
+                    node.nodeValue = translateFrom(srcLang, node.nodeValue);
                 }
             }
+            el.lang = activeLang;
         }
     };
 });

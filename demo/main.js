@@ -6,5 +6,9 @@ require.config({
 });
 
 require(['i18n'], function(i18n) {
-    i18n.translateDocTree();
+	document.getElementById("select").onchange = function(evt) {
+        var lang = evt.target.options[evt.target.selectedIndex].innerHTML;
+        i18n.setLang(lang);
+        i18n.translateDocTree();
+    }
 });
