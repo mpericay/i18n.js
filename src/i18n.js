@@ -34,19 +34,30 @@ define(['text!translations.json'], function(bundle) {
         }
         return template(string, values);
     }
+    
+    function untrim(string, leftSpace = 0, rightSpace = 0) {
+        return Array(leftSpace+1).join(" ") + string + Array(rightSpace+1).join(" ");
+    }
+    
+    function reverseString(s) {
+        return s.split('').reverse().join('');
+    }
 
     function translateFrom(lang, string, values) {
+        var leftSpace = string.search(/\S/);
+        var rightSpace = reverseString(string).search(/\S/);
+        string = string.trim();
         if (!lang || lang == defaultLang) {
-            return t(string, values);
+            return untrim(t(string, values), leftSpace, rightSpace);
         }
         for(var i in translations) {
             var token = translations[i];
             if(token[lang] && token[lang] == string) {
                 var string = activeLang == defaultLang ? i : token[activeLang]
-                return template(string, values);
+                return untrim(template(string, values), leftSpace, rightSpace);
             }
         }
-        return template(string, values);
+        return untrim(template(string, values), leftSpace, rightSpace);
     }
 
     return {
